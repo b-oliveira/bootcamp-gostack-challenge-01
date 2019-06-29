@@ -57,4 +57,17 @@ server.put("/projects/:id", checkProjectExists, (req, res) => {
   return res.json(project);
 });
 
+/**
+ * Exclui um projeto
+ */
+server.delete("/projects/:id", checkProjectExists, (req, res) => {
+  const { id } = req.params;
+
+  const project = projects.find(p => p.id === id);
+
+  projects.splice(project.index, 1);
+
+  return res.send();
+});
+
 server.listen(3000);
