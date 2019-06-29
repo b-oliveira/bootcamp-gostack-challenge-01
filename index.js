@@ -27,6 +27,17 @@ server.get("/projects", (req, res) => {
 });
 
 /**
+ * Consulta um projeto
+ */
+server.get("/projects/:id", checkProjectExists, (req, res) => {
+  const { id } = req.params;
+
+  const project = projects.find(p => p.id === id);
+
+  return res.json(project);
+});
+
+/**
  * Cria um projeto.
  */
 server.post("/projects", (req, res) => {
