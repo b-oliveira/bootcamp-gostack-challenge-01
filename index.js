@@ -7,6 +7,19 @@ server.use(express.json());
 const projects = [];
 
 /**
+ * Middleware para checar se um projeto existe
+ */
+function checkProjectExists(req, res, next) {
+  const { id } = req.params;
+
+  const project = projects.find(p => p.id === id);
+
+  if (!project) return res.status(404).json({ error: "Project not found!" });
+
+  return next();
+}
+
+/**
  * Lista todos os projetos
  */
 server.get("/projects", (req, res) => {
