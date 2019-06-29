@@ -43,4 +43,18 @@ server.post("/projects", (req, res) => {
   return res.json(project);
 });
 
+/**
+ * Edita um projeto.
+ */
+server.put("/projects/:id", checkProjectExists, (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+
+  const project = projects.find(p => p.id === id);
+
+  project.title = title;
+
+  return res.json(project);
+});
+
 server.listen(3000);
