@@ -4,7 +4,17 @@ const server = express();
 
 server.use(express.json());
 
+let requests = 0;
 const projects = [];
+
+/**
+ * Middleware global que imprime o número de requisições
+ */
+server.use((req, res, next) => {
+  console.log(`Requisições: ${++requests}`);
+
+  return next();
+});
 
 /**
  * Middleware para checar se um projeto existe
