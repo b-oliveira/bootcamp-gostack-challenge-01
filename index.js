@@ -12,7 +12,7 @@ const projects = [];
 function checkProjectExists(req, res, next) {
   const { id } = req.params;
 
-  const project = projects.find(p => p.id === id);
+  const project = findProject(id);
 
   if (!project) return res.status(404).json({ error: "Project not found!" });
 
@@ -32,7 +32,7 @@ server.get("/projects", (req, res) => {
 server.get("/projects/:id", checkProjectExists, (req, res) => {
   const { id } = req.params;
 
-  const project = projects.find(p => p.id === id);
+  const project = findProject(id);
 
   return res.json(project);
 });
@@ -61,7 +61,7 @@ server.put("/projects/:id", checkProjectExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
-  const project = projects.find(p => p.id === id);
+  const project = findProject(id);
 
   project.title = title;
 
@@ -74,7 +74,7 @@ server.put("/projects/:id", checkProjectExists, (req, res) => {
 server.delete("/projects/:id", checkProjectExists, (req, res) => {
   const { id } = req.params;
 
-  const project = projects.find(p => p.id === id);
+  const project = findProject(id);
 
   projects.splice(project.index, 1);
 
@@ -88,11 +88,18 @@ server.post("/projects/:id/tasks", checkProjectExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
-  const project = projects.find(p => p.id === id);
+  const project = findProject(id);
 
   project.tasks.push(title);
 
   return res.json(project);
 });
+
+/**
+ * Retorna um projeto
+ */
+function findProject(id) {
+  return projects.find(p => p.id === id);
+}
 
 server.listen(3000);
