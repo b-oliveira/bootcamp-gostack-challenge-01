@@ -7,6 +7,13 @@ server.use(express.json());
 const projects = [];
 
 /**
+ * Lista todos os projetos
+ */
+server.get("/projects", (req, res) => {
+  return res.json(projects);
+});
+
+/**
  * Cria um projeto.
  */
 server.post("/projects", (req, res) => {
